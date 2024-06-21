@@ -10,11 +10,15 @@ const api = axios.create({
 
 export const login = async (credentials) => {
     const response = await api.post('/api/login', credentials);
-    // console.log(response.data);
     return response.data;
 };
 
 export const register = async (userInfo) => {
     const response = await api.post('/api/register', userInfo);
+    return response.data;
+};
+
+export const logout = async () => {
+    const response = await api.get('/api/logout');
     return response.data;
 };

@@ -1,7 +1,7 @@
 // src/api/products.js
 import axios from 'axios';
 
-
+console.log('Product API Base URL:', process.env.BASE_URL);
 const api = axios.create({
     baseURL: "http://127.0.0.1:8000",
 });

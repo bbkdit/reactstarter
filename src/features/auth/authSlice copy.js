@@ -3,7 +3,6 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { login, register } from '../../api';
 
 const initialState = {
-    user: null,
     token: null,
     status: 'idle',
     error: null,
@@ -11,24 +10,20 @@ const initialState = {
 
 export const loginUser = createAsyncThunk('auth/loginUser', async (credentials) => {
     const response = await login(credentials);
-    return response.data;
+    return response.data.token;
 });
 
 export const registerUser = createAsyncThunk('auth/registerUser', async (userInfo) => {
     const response = await register(userInfo);
-    return response.data;
+    return response.data.token;
 });
-
 
 const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
         logout: (state) => {
-            state.user = null;
             state.token = null;
-            state.status = 'idle';
-            state.error = null;
         },
     },
     extraReducers: (builder) => {
@@ -38,8 +33,7 @@ const authSlice = createSlice({
             })
             .addCase(loginUser.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                state.token = action.payload.token;
-                state.user = action.payload.user;
+                state.token = action.payload;
             })
             .addCase(loginUser.rejected, (state, action) => {
                 state.status = 'failed';

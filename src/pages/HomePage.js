@@ -9,6 +9,8 @@ const HomePage = () => {
 
     if (!token) {
         return <Navigate to="/login" />;
+    }else{
+        <button type="submit">{'Login'}</button>
     }
 
     return (
